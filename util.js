@@ -3,14 +3,14 @@ function matchLiteral(literal) {
     else if (true) return 'string';
 }
 
-function mapType(type) {
+function mapType(type, def = 'any') {
     switch (type) {
         case 'NumericLiteral':
             return 'number';
         case 'StringLiteral':
             return 'string';
         default:
-            return 'any';
+            return def;
     }
 }
 
@@ -28,17 +28,17 @@ function typesDiffer(elements) {
     return false;
 }
 
-function getType(node) {
+function getType(node, def = 'any') {
     const isArray = node.type === 'ArrayExpression';
 
     if (isArray) {
         if (node.elements.length == 0) return 'any[]';
         if (typesDiffer(node.elements)) return multiTypeArray(node.elements);
 
-        const baseType = mapType(node.elements[0].type);
+        const baseType = mapType(node.elements[0].type, def);
         return baseType + '[]';
     }
-    return mapType(node.type);
+    return mapType(node.type, def);
 }
 
 function addTypeAnnotation(node, types) {

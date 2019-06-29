@@ -30,3 +30,7 @@ function d(a) {
 d('hello');
 
 function e() {}
+
+function f() {
+    return d();
+}

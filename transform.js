@@ -26,6 +26,7 @@ module.exports = (getMaps, setPoints) =>
                     const ret = node.body.body.find(
                         x => x.type === 'ReturnStatement'
                     );
+                    if (!ret) return;
 
                     // only one array element may be present in the map
                     if (functionToTypeMap[node.id.name][0] == 'any') {

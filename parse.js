@@ -27,6 +27,7 @@ module.exports = setMaps =>
                     const ret = node.body.body.find(
                         x => x.type === 'ReturnStatement'
                     );
+                    if (!ret) return;
 
                     functionToTypeMap[node.id.name] = [getType(ret.argument)];
                     functionToArgsMap[node.id.name] = node.params.map(

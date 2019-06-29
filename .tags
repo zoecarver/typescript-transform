@@ -6301,6 +6301,7 @@ cwd	node_modules/babel-register/lib/node.js	/^var cwd = process.cwd();$/;"	v
 cwd	node_modules/json5/lib/cli.js	/^var cwd = process.cwd();$/;"	v
 d	node_modules/lodash/lodash.min.js	/^--r;for(var u=n.length;++r<u;)if(e(n[r],t))return r;return-1}function d(n){return n!==n}function y(n,t){var r=null==n?0:n.length;return r?m(n,t)\/r:F}function b(n){return function(t){return null==t?T:t[n]}}function x(n){return function(t){return null==n?T:n[t]}}function j(n,t,r,e,u){return u(n,function(n,u,i){r=e?(e=false,n):t(r,n,u,i)}),r}function w(n,t){var r=n.length;for(n.sort(t);r--;)n[r]=n[r].c;return n}function m(n,t){for(var r,e=-1,u=n.length;++e<u;){var i=t(n[e]);i!==T&&(r=r===T?i:r+i)}return r;$/;"	f
 d	node_modules/ms/index.js	/^var d = h * 24;$/;"	v
+d	test-file.js	/^function d(a) {$/;"	f
 d.I	node_modules/lodash/lodash.min.js	/^}function A(n,t){for(var r=-1,e=Array(n);++r<n;)e[r]=t(r);return e}function k(n,t){return c(t,function(t){return[t,n[t]]})}function E(n){return function(t){return n(t)}}function S(n,t){return c(t,function(t){return n[t]})}function O(n,t){return n.has(t)}function I(n,t){for(var r=-1,e=n.length;++r<e&&-1<v(t,n[r],0););return r}function R(n,t){for(var r=n.length;r--&&-1<v(t,n[r],0););return r}function z(n){return"\\\\"+Ln[n]}function W(n){var t=-1,r=Array(n.size);return n.forEach(function(n,e){r[++t]=[e,n];$/;"	f
 d.O	node_modules/lodash/lodash.min.js	/^}function A(n,t){for(var r=-1,e=Array(n);++r<n;)e[r]=t(r);return e}function k(n,t){return c(t,function(t){return[t,n[t]]})}function E(n){return function(t){return n(t)}}function S(n,t){return c(t,function(t){return n[t]})}function O(n,t){return n.has(t)}function I(n,t){for(var r=-1,e=n.length;++r<e&&-1<v(t,n[r],0););return r}function R(n,t){for(var r=n.length;r--&&-1<v(t,n[r],0););return r}function z(n){return"\\\\"+Ln[n]}function W(n){var t=-1,r=Array(n.size);return n.forEach(function(n,e){r[++t]=[e,n];$/;"	f
 d.R	node_modules/lodash/lodash.min.js	/^}function A(n,t){for(var r=-1,e=Array(n);++r<n;)e[r]=t(r);return e}function k(n,t){return c(t,function(t){return[t,n[t]]})}function E(n){return function(t){return n(t)}}function S(n,t){return c(t,function(t){return n[t]})}function O(n,t){return n.has(t)}function I(n,t){for(var r=-1,e=n.length;++r<e&&-1<v(t,n[r],0););return r}function R(n,t){for(var r=n.length;r--&&-1<v(t,n[r],0););return r}function z(n){return"\\\\"+Ln[n]}function W(n){var t=-1,r=Array(n.size);return n.forEach(function(n,e){r[++t]=[e,n];$/;"	f
@@ -6885,6 +6886,7 @@ dropWhile	node_modules/lodash/dropWhile.js	/^function dropWhile(array, predicate
 dropWhile	node_modules/lodash/lodash.js	/^    function dropWhile(array, predicate) {$/;"	f
 e	node_modules/lodash/core.min.js	/^;(function(){function n(n){return H(n)&&pn.call(n,"callee")&&!yn.call(n,"callee")}function t(n,t){return n.push.apply(n,t),n}function r(n){return function(t){return null==t?Z:t[n]}}function e(n,t,r,e,u){return u(n,function(n,u,o){r=e?(e=false,n):t(r,n,u,o)}),r}function u(n,t){return j(t,function(t){return n[t]})}function o(n){return n instanceof i?n:new i(n)}function i(n,t){this.__wrapped__=n,this.__actions__=[],this.__chain__=!!t}function c(n,t,r){if(typeof n!="function")throw new TypeError("Expected a function");$/;"	f
 e	node_modules/lodash/lodash.min.js	/^;(function(){function n(n,t,r){switch(r.length){case 0:return n.call(t);case 1:return n.call(t,r[0]);case 2:return n.call(t,r[0],r[1]);case 3:return n.call(t,r[0],r[1],r[2])}return n.apply(t,r)}function t(n,t,r,e){for(var u=-1,i=null==n?0:n.length;++u<i;){var o=n[u];t(e,o,r(o),n)}return e}function r(n,t){for(var r=-1,e=null==n?0:n.length;++r<e&&false!==t(n[r],r,n););return n}function e(n,t){for(var r=null==n?0:n.length;r--&&false!==t(n[r],r,n););return n}function u(n,t){for(var r=-1,e=null==n?0:n.length;++r<e;)if(!t(n[r],r,n))return false;$/;"	f
+e	test-file.js	/^function e() {}$/;"	f
 each	node_modules/core-js/library/modules/_collection.js	/^var each = require('.\/_array-methods')(0);$/;"	v
 each	node_modules/core-js/library/modules/es6.weak-map.js	/^var each = require('.\/_array-methods')(0);$/;"	v
 each	node_modules/core-js/modules/es6.weak-map.js	/^var each = require('.\/_array-methods')(0);$/;"	v
@@ -7453,6 +7455,7 @@ extend	node_modules/jsesc/jsesc.js	/^	var extend = function(destination, source)
 extends	node_modules/ms/package.json	/^    "extends": "eslint:recommended",$/;"	f
 external	node_modules/globals/globals.json	/^		"external": false,$/;"	f
 f	node_modules/lodash/lodash.min.js	/^return true}function i(n,t){for(var r=-1,e=null==n?0:n.length,u=0,i=[];++r<e;){var o=n[r];t(o,r,n)&&(i[u++]=o)}return i}function o(n,t){return!(null==n||!n.length)&&-1<v(n,t,0)}function f(n,t,r){for(var e=-1,u=null==n?0:n.length;++e<u;)if(r(t,n[e]))return true;return false}function c(n,t){for(var r=-1,e=null==n?0:n.length,u=Array(e);++r<e;)u[r]=t(n[r],r,n);return u}function a(n,t){for(var r=-1,e=t.length,u=n.length;++r<e;)n[u+r]=t[r];return n}function l(n,t,r,e){var u=-1,i=null==n?0:n.length;for(e&&i&&(r=n[++u]);++u<i;)r=t(r,n[u],u,n);$/;"	f
+f	test-file.js	/^function f() {$/;"	f
 fail	node_modules/globals/globals.json	/^		"fail": false,$/;"	f
 fails	node_modules/core-js/library/modules/_collection.js	/^var fails = require('.\/_fails');$/;"	v
 fails	node_modules/core-js/library/modules/_date-to-iso-string.js	/^var fails = require('.\/_fails');$/;"	v
@@ -7993,7 +7996,7 @@ getTime	node_modules/core-js/modules/_date-to-iso-string.js	/^var getTime = Date
 getTime	node_modules/core-js/modules/es6.date.to-string.js	/^var getTime = DateProto.getTime;$/;"	v
 getTokenType	node_modules/babel-code-frame/lib/index.js	/^function getTokenType(match) {$/;"	f
 getType	node_modules/babel-types/lib/definitions/index.js	/^function getType(val) {$/;"	f
-getType	util.js	/^function getType(node) {$/;"	f
+getType	util.js	/^function getType(node, def = 'any') {$/;"	f
 getTypeAnnotation	node_modules/babel-traverse/lib/path/inference/index.js	/^function getTypeAnnotation() {$/;"	c
 getTypeAnnotationBindingConstantViolations	node_modules/babel-traverse/lib/path/inference/inferer-reference.js	/^function getTypeAnnotationBindingConstantViolations(path, name) {$/;"	f
 getValue	node_modules/lodash/_getValue.js	/^function getValue(object, key) {$/;"	f
@@ -9198,7 +9201,7 @@ mapTag	node_modules/lodash/isEmpty.js	/^var mapTag = '[object Map]',$/;"	v
 mapTag	node_modules/lodash/size.js	/^var mapTag = '[object Map]',$/;"	v
 mapTag	node_modules/lodash/toArray.js	/^var mapTag = '[object Map]',$/;"	v
 mapToArray	node_modules/lodash/_mapToArray.js	/^function mapToArray(map) {$/;"	f
-mapType	util.js	/^function mapType(type) {$/;"	f
+mapType	util.js	/^function mapType(type, def = 'any') {$/;"	f
 mapValues	node_modules/lodash/lodash.js	/^    function mapValues(object, iteratee) {$/;"	f
 mapValues	node_modules/lodash/mapValues.js	/^function mapValues(object, iteratee) {$/;"	f
 mapping	node_modules/lodash/fp/_baseConvert.js	/^var mapping = require('.\/_mapping'),$/;"	v
@@ -12960,13 +12963,11 @@ zipObject	node_modules/lodash/zipObject.js	/^function zipObject(props, values) {
 zipObjectDeep	node_modules/lodash/lodash.js	/^    function zipObjectDeep(props, values) {$/;"	f
 zipObjectDeep	node_modules/lodash/zipObjectDeep.js	/^function zipObjectDeep(props, values) {$/;"	f
 zipWith	node_modules/lodash/zipWith.js	/^var zipWith = baseRest(function(arrays) {$/;"	v
-c	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function c(x, y, z) {$/;"	function	line:7
-c	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function c(x, y, z) {$/;"	function	line:7
-b	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function b(x, y, z) {$/;"	function	line:13
-b	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function b(x, y, z) {$/;"	function	line:13
-y	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function y(a, b) {$/;"	function	line:19
-y	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function y(a, b) {$/;"	function	line:19
-d	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function d(a) {$/;"	function	line:26
-d	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function d(a) {$/;"	function	line:26
-e	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function e() {}$/;"	function	line:32
-e	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function e() {}$/;"	function	line:32
+getMaps	/Users/zoec/Desktop/typescript-transform/index.js	/^function getMaps() {$/;"	function	line:13
+getMaps	/Users/zoec/Desktop/typescript-transform/index.js	/^function getMaps() {$/;"	function	line:13
+setMaps	/Users/zoec/Desktop/typescript-transform/index.js	/^function setMaps([_variableToTypeMap, _functionToTypeMap, _argumentToTypeMap]) {$/;"	function	line:17
+setMaps	/Users/zoec/Desktop/typescript-transform/index.js	/^function setMaps([_variableToTypeMap, _functionToTypeMap, _argumentToTypeMap]) {$/;"	function	line:17
+setPoints	/Users/zoec/Desktop/typescript-transform/index.js	/^function setPoints(points) {$/;"	function	line:23
+setPoints	/Users/zoec/Desktop/typescript-transform/index.js	/^function setPoints(points) {$/;"	function	line:23
+parseFunctionTypeInsertPoints	/Users/zoec/Desktop/typescript-transform/index.js	/^function parseFunctionTypeInsertPoints(code) {$/;"	function	line:27
+parseFunctionTypeInsertPoints	/Users/zoec/Desktop/typescript-transform/index.js	/^function parseFunctionTypeInsertPoints(code) {$/;"	function	line:27

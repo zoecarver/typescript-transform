@@ -46,5 +46,5 @@ fs.readFile(fileName, (err, data) => {
     });
 
     const code = parseFunctionTypeInsertPoints(output.code);
-    console.log(code);
+    console.log('\n', code);
 });
