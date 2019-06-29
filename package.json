@@ -1,0 +1,14 @@
+{
+  "name": "typescript-transform",
+  "version": "1.0.0",
+  "description": "A tool to generate typescript from JS",
+  "main": "plugin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.3"
+  }
+}
