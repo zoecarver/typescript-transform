@@ -1,6 +1,9 @@
 const { getType, addTypeAnnotation } = require('./util');
 
-module.exports = getMaps =>
+let functionTypeInsertPoints = [];
+let offset = 0;
+
+module.exports = (getMaps, setPoints) =>
     function(babel) {
         const [
             variableToTypeMap,
@@ -12,15 +15,27 @@ module.exports = getMaps =>
         return {
             visitor: {
                 VariableDeclarator: function({ node }) {
-                    addTypeAnnotation(node.id, variableToTypeMap[node.id.name]);
+                    offset += addTypeAnnotation(
+                        node.id,
+                        variableToTypeMap[node.id.name]
+                    );
                 },
                 FunctionDeclaration: function({ node }) {
                     node.params.forEach((param, index) => {
-                        addTypeAnnotation(
+                        offset += addTypeAnnotation(
                             param,
                             argumentToTypeMap[node.id.name][index]
                         );
                     });
+                    functionTypeInsertPoints.push({
+                        point: node.body.start + offset - 1,
+                        type: functionToTypeMap[node.id.name]
+                    });
+                },
+                Program: {
+                    exit: function() {
+                        setPoints(functionTypeInsertPoints);
+                    }
                 }
             }
         };

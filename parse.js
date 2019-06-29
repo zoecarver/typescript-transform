@@ -40,16 +40,18 @@ module.exports = setMaps =>
                         ] = node.arguments.map(x => [getType(x)]);
                     }
                 },
-                SpreadElement: function() {
-                    setMaps([
-                        variableToTypeMap,
-                        functionToTypeMap,
-                        argumentToTypeMap
-                    ]);
-                    console.log(variableToTypeMap);
-                    console.log(functionToTypeMap);
-                    console.log(argumentToTypeMap);
-                    console.log('\n******************************\n');
+                Program: {
+                    exit: function() {
+                        setMaps([
+                            variableToTypeMap,
+                            functionToTypeMap,
+                            argumentToTypeMap
+                        ]);
+                        console.log(variableToTypeMap);
+                        console.log(functionToTypeMap);
+                        console.log(argumentToTypeMap);
+                        console.log('\n******************************\n');
+                    }
                 }
             }
         };

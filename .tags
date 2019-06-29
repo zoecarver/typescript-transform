@@ -10412,6 +10412,7 @@ parseArgs	node_modules/babel-messages/lib/index.js	/^function parseArgs(args) {$
 parseCommaParts	node_modules/brace-expansion/index.js	/^function parseCommaParts(str) {$/;"	f
 parseExpression	node_modules/babylon/lib/index.js	/^function parseExpression(input, options) {$/;"	f
 parseFloat	node_modules/globals/globals.json	/^		"parseFloat": false,$/;"	f
+parseFunctionTypeInsertPoints	index.js	/^function parseFunctionTypeInsertPoints(code) {$/;"	f
 parseInt	node_modules/globals/globals.json	/^		"parseInt": false,$/;"	f
 parseInt	node_modules/lodash/lodash.js	/^    function parseInt(string, radix, guard) {$/;"	f
 parseInt	node_modules/lodash/parseInt.js	/^function parseInt(string, radix, guard) {$/;"	f
@@ -11541,6 +11542,7 @@ setKey	node_modules/minimist/index.js	/^function setKey (obj, keys, value) {$/;"
 setMaps	index.js	/^function setMaps([_variableToTypeMap, _functionToTypeMap, _argumentToTypeMap]) {$/;"	f
 setMeta	node_modules/core-js/library/modules/_meta.js	/^var setMeta = function (it) {$/;"	f
 setMeta	node_modules/core-js/modules/_meta.js	/^var setMeta = function (it) {$/;"	f
+setPoints	index.js	/^function setPoints(points) {$/;"	f
 setProto	node_modules/core-js/library/modules/es6.reflect.set-prototype-of.js	/^var setProto = require('.\/_set-proto');$/;"	v
 setProto	node_modules/core-js/modules/es6.reflect.set-prototype-of.js	/^var setProto = require('.\/_set-proto');$/;"	v
 setPrototypeOf	node_modules/core-js/library/modules/_inherit-if-required.js	/^var setPrototypeOf = require('.\/_set-proto').set;$/;"	v
@@ -12955,3 +12957,7 @@ zipObject	node_modules/lodash/zipObject.js	/^function zipObject(props, values) {
 zipObjectDeep	node_modules/lodash/lodash.js	/^    function zipObjectDeep(props, values) {$/;"	f
 zipObjectDeep	node_modules/lodash/zipObjectDeep.js	/^function zipObjectDeep(props, values) {$/;"	f
 zipWith	node_modules/lodash/zipWith.js	/^var zipWith = baseRest(function(arrays) {$/;"	v
+y	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function y(a, b) {$/;"	function	line:4
+y	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function y(a, b) {$/;"	function	line:4
+b	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function b(x, y, z) {$/;"	function	line:14
+b	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function b(x, y, z) {$/;"	function	line:14

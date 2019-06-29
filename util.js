@@ -42,7 +42,9 @@ function getType(node) {
 }
 
 function addTypeAnnotation(node, types) {
-    node.name += ':' + types.join('|');
+    const typeAnnotation = ':' + types.join('|');
+    node.name += typeAnnotation;
+    return typeAnnotation.length;
 }
 
 // extentions

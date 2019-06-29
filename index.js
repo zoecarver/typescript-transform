@@ -7,16 +7,30 @@ const fileName = process.argv[2];
 let variableToTypeMap;
 let functionToTypeMap;
 let argumentToTypeMap;
+let functionTypeInsertPoints;
+let offset = 0;
 
 function getMaps() {
     return [variableToTypeMap, functionToTypeMap, argumentToTypeMap];
 }
 
 function setMaps([_variableToTypeMap, _functionToTypeMap, _argumentToTypeMap]) {
-    console.log('reviced');
     variableToTypeMap = _variableToTypeMap;
     functionToTypeMap = _functionToTypeMap;
     argumentToTypeMap = _argumentToTypeMap;
+}
+
+function setPoints(points) {
+    functionTypeInsertPoints = points;
+}
+
+function parseFunctionTypeInsertPoints(code) {
+    functionTypeInsertPoints.map(({ point, type }, index) => {
+        const typeAnnotation = `:${type}`;
+        code = code.insert(point + offset, typeAnnotation);
+        offset += typeAnnotation.length;
+    });
+    return code;
 }
 
 fs.readFile(fileName, (err, data) => {
@@ -28,8 +42,9 @@ fs.readFile(fileName, (err, data) => {
     });
 
     const output = babel.transform(src, {
-        plugins: [transform(getMaps)]
+        plugins: [transform(getMaps, setPoints)]
     });
 
-    console.log(output.code);
+    const code = parseFunctionTypeInsertPoints(output.code);
+    console.log(code);
 });
