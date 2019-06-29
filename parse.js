@@ -35,7 +35,13 @@ module.exports = setMaps =>
                     );
                 },
                 CallExpression: function({ node }) {
-                    if (argumentToTypeMap[node.callee.name] instanceof Array) {
+                    if (
+                        argumentToTypeMap[
+                            `${node.callee.name}::${
+                                functionToArgsMap[node.callee.name][0]
+                            }`
+                        ] instanceof Array
+                    ) {
                         node.arguments.forEach((arg, index) => {
                             argumentToTypeMap[
                                 `${node.callee.name}::${

@@ -26,7 +26,7 @@ function setPoints(points) {
 
 function parseFunctionTypeInsertPoints(code) {
     functionTypeInsertPoints.map(({ point, type }, index) => {
-        const typeAnnotation = `:${type}`;
+        const typeAnnotation = `:${type.join('|')}`;
         code = code.insert(point + offset, typeAnnotation);
         offset += typeAnnotation.length;
     });

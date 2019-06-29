@@ -3,7 +3,7 @@ const { getType } = require('./util');
 function deduceType(node, maps, currentFunction) {
     // if we can get literal type, do that
     const literalType = getType(node, null);
-    if (literalType) return literalType;
+    if (literalType) return [literalType];
 
     const [variableToTypeMap, functionToTypeMap, argumentToTypeMap] = maps;
     let returnType;
