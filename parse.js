@@ -3,6 +3,7 @@ const { getType } = require('./util');
 let variableToTypeMap = new Object();
 let functionToTypeMap = new Object();
 let argumentToTypeMap = new Object();
+let functionToArgsMap = new Object();
 
 module.exports = setMaps =>
     function(babel) {
@@ -26,18 +27,28 @@ module.exports = setMaps =>
                     const ret = node.body.body.find(
                         x => x.type === 'ReturnStatement'
                     );
-                    functionToTypeMap[node.id.name] = getType(ret.argument);
+                    functionToTypeMap[node.id.name] = [getType(ret.argument)];
+                    functionToArgsMap[node.id.name] = node.params.map(
+                        x => x.name
+                    );
                 },
                 CallExpression: function({ node }) {
                     if (argumentToTypeMap[node.callee.name] instanceof Array) {
-                        argumentToTypeMap[node.callee.name].forEach(
-                            (param, index) =>
-                                param.push(getType(node.arguments[index]))
-                        );
+                        node.arguments.forEach((arg, index) => {
+                            argumentToTypeMap[
+                                `${node.callee.name}::${
+                                    functionToArgsMap[node.callee.name][index]
+                                }`
+                            ].push(getType(arg));
+                        });
                     } else {
-                        argumentToTypeMap[
-                            node.callee.name
-                        ] = node.arguments.map(x => [getType(x)]);
+                        node.arguments.forEach((arg, index) => {
+                            argumentToTypeMap[
+                                `${node.callee.name}::${
+                                    functionToArgsMap[node.callee.name][index]
+                                }`
+                            ] = [getType(arg)];
+                        });
                     }
                 },
                 Program: {

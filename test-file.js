@@ -12,7 +12,7 @@ let z = [1, 2, 3];
 let a = ['a', 0, true];
 
 function b(x, y, z) {
-    return x + y + z;
+    return x;
 }
 
 b(0, 1, 2);

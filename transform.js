@@ -21,10 +21,33 @@ module.exports = (getMaps, setPoints) =>
                     );
                 },
                 FunctionDeclaration: function({ node }) {
+                    // if we return an identifier, we might already know what type it is
+                    const ret = node.body.body.find(
+                        x => x.type === 'ReturnStatement'
+                    );
+                    if (ret.argument.type == 'Identifier') {
+                        // TODO: cleanup this block of code
+                        if (variableToTypeMap[ret.argument.name]) {
+                            functionToTypeMap[node.id.name] =
+                                variableToTypeMap[ret.argument.name];
+                        }
+                        // we want this to override variables
+                        if (
+                            argumentToTypeMap[
+                                `${node.id.name}::${ret.argument.name}`
+                            ]
+                        ) {
+                            functionToTypeMap[node.id.name] =
+                                argumentToTypeMap[
+                                    `${node.id.name}::${ret.argument.name}`
+                                ];
+                        }
+                    }
+
                     node.params.forEach((param, index) => {
                         offset += addTypeAnnotation(
                             param,
-                            argumentToTypeMap[node.id.name][index]
+                            argumentToTypeMap[`${node.id.name}::${param.name}`]
                         );
                     });
                     functionTypeInsertPoints.push({

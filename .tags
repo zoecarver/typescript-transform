@@ -4783,6 +4783,7 @@ ava	node_modules/repeating/package.json	/^    "ava": "*",$/;"	f
 ava	node_modules/strip-ansi/package.json	/^    "ava": "*",$/;"	f
 ava	node_modules/to-fast-properties/package.json	/^    "ava": "0.0.4"$/;"	f
 ava	node_modules/trim-right/package.json	/^    "ava": "0.0.4"$/;"	f
+b	test-file.js	/^function b(x, y, z) {$/;"	f
 b.y	node_modules/lodash/core.min.js	/^}function h(n,t){return l(t,function(t){return U(n[t])})}function v(n,t){return n>t}function b(n,t,r,e,u){return n===t||(null==n||null==t||!H(n)&&!H(t)?n!==n&&t!==t:y(n,t,r,e,b,u))}function y(n,t,r,e,u,o){var i=Nn(n),c=Nn(t),f=i?"[object Array]":hn.call(n),a=c?"[object Array]":hn.call(t),f="[object Arguments]"==f?"[object Object]":f,a="[object Arguments]"==a?"[object Object]":a,l="[object Object]"==f,c="[object Object]"==a,a=f==a;o||(o=[]);var p=An(o,function(t){return t[0]==n}),s=An(o,function(n){$/;"	f
 babel	node_modules/babel-register/lib/node.js	/^var babel = _interopRequireWildcard(_babelCore);$/;"	v
 babel-cli	node_modules/babylon/package.json	/^    "babel-cli": "^6.14.0",$/;"	f
@@ -12957,7 +12958,3 @@ zipObject	node_modules/lodash/zipObject.js	/^function zipObject(props, values) {
 zipObjectDeep	node_modules/lodash/lodash.js	/^    function zipObjectDeep(props, values) {$/;"	f
 zipObjectDeep	node_modules/lodash/zipObjectDeep.js	/^function zipObjectDeep(props, values) {$/;"	f
 zipWith	node_modules/lodash/zipWith.js	/^var zipWith = baseRest(function(arrays) {$/;"	v
-y	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function y(a, b) {$/;"	function	line:4
-y	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function y(a, b) {$/;"	function	line:4
-b	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function b(x, y, z) {$/;"	function	line:14
-b	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function b(x, y, z) {$/;"	function	line:14
