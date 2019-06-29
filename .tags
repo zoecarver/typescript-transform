@@ -5467,6 +5467,7 @@ bundleDependencies	node_modules/to-fast-properties/package.json	/^  "bundleDepen
 bundleDependencies	node_modules/trim-right/package.json	/^  "bundleDependencies": false,$/;"	f
 by	node_modules/globals/globals.json	/^		"by": false,$/;"	f
 c	node_modules/lodash/lodash.min.js	/^return true}function i(n,t){for(var r=-1,e=null==n?0:n.length,u=0,i=[];++r<e;){var o=n[r];t(o,r,n)&&(i[u++]=o)}return i}function o(n,t){return!(null==n||!n.length)&&-1<v(n,t,0)}function f(n,t,r){for(var e=-1,u=null==n?0:n.length;++e<u;)if(r(t,n[e]))return true;return false}function c(n,t){for(var r=-1,e=null==n?0:n.length,u=Array(e);++r<e;)u[r]=t(n[r],r,n);return u}function a(n,t){for(var r=-1,e=t.length,u=n.length;++r<e;)n[u+r]=t[r];return n}function l(n,t,r,e){var u=-1,i=null==n?0:n.length;for(e&&i&&(r=n[++u]);++u<i;)r=t(r,n[u],u,n);$/;"	f
+c	test-file.js	/^function c(x, y, z) {$/;"	f
 cache	node_modules/babel-register/lib/node.js	/^var cache = registerCache.get();$/;"	v
 cache	node_modules/babel-traverse/lib/index.js	/^var cache = _interopRequireWildcard(_cache);$/;"	v
 cacheHas	node_modules/lodash/_cacheHas.js	/^function cacheHas(cache, key) {$/;"	f
@@ -6579,6 +6580,7 @@ declar	node_modules/babel-traverse/lib/scope/index.js	/^      var declar = node.
 decodeURI	node_modules/globals/globals.json	/^		"decodeURI": false,$/;"	f
 decodeURIComponent	node_modules/globals/globals.json	/^		"decodeURIComponent": false,$/;"	f
 decodeUtf16	node_modules/esutils/lib/keyword.js	/^    function decodeUtf16(lead, trail) {$/;"	f
+deduceType	type-deduction.js	/^function deduceType(node, maps, currentFunction) {$/;"	f
 deepEqual	node_modules/globals/globals.json	/^		"deepEqual": false,$/;"	f
 def	node_modules/core-js/library/modules/_set-to-string-tag.js	/^var def = require('.\/_object-dp').f;$/;"	v
 def	node_modules/core-js/modules/_set-to-string-tag.js	/^var def = require('.\/_object-dp').f;$/;"	v
@@ -12958,3 +12960,13 @@ zipObject	node_modules/lodash/zipObject.js	/^function zipObject(props, values) {
 zipObjectDeep	node_modules/lodash/lodash.js	/^    function zipObjectDeep(props, values) {$/;"	f
 zipObjectDeep	node_modules/lodash/zipObjectDeep.js	/^function zipObjectDeep(props, values) {$/;"	f
 zipWith	node_modules/lodash/zipWith.js	/^var zipWith = baseRest(function(arrays) {$/;"	v
+c	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function c(x, y, z) {$/;"	function	line:7
+c	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function c(x, y, z) {$/;"	function	line:7
+b	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function b(x, y, z) {$/;"	function	line:13
+b	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function b(x, y, z) {$/;"	function	line:13
+y	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function y(a, b) {$/;"	function	line:19
+y	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function y(a, b) {$/;"	function	line:19
+d	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function d(a) {$/;"	function	line:26
+d	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function d(a) {$/;"	function	line:26
+e	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function e() {}$/;"	function	line:32
+e	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function e() {}$/;"	function	line:32

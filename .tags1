@@ -4,7 +4,13 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-y	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function y(a, b) {$/;"	function	line:4
-y	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function y(a, b) {$/;"	function	line:4
-b	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function b(x, y, z) {$/;"	function	line:14
-b	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function b(x, y, z) {$/;"	function	line:14
+c	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function c(x, y, z) {$/;"	function	line:7
+c	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function c(x, y, z) {$/;"	function	line:7
+b	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function b(x, y, z) {$/;"	function	line:13
+b	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function b(x, y, z) {$/;"	function	line:13
+y	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function y(a, b) {$/;"	function	line:19
+y	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function y(a, b) {$/;"	function	line:19
+d	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function d(a) {$/;"	function	line:26
+d	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function d(a) {$/;"	function	line:26
+e	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function e() {}$/;"	function	line:32
+e	/Users/zoec/Desktop/typescript-transform/test-file.js	/^function e() {}$/;"	function	line:32

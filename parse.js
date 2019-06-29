@@ -27,6 +27,7 @@ module.exports = setMaps =>
                     const ret = node.body.body.find(
                         x => x.type === 'ReturnStatement'
                     );
+
                     functionToTypeMap[node.id.name] = [getType(ret.argument)];
                     functionToArgsMap[node.id.name] = node.params.map(
                         x => x.name
@@ -49,6 +50,13 @@ module.exports = setMaps =>
                                 }`
                             ] = [getType(arg)];
                         });
+                    }
+                },
+                Identifier: function(path) {
+                    if (path.getStatementParent().type === 'ReturnStatement') {
+                        if (path.getFunctionParent().id) {
+                            console.log(path.getFunctionParent().id);
+                        }
                     }
                 },
                 Program: {

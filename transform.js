@@ -1,4 +1,5 @@
 const { getType, addTypeAnnotation } = require('./util');
+const { deduceType } = require('./type-deduction');
 
 let functionTypeInsertPoints = [];
 let offset = 0;
@@ -25,23 +26,19 @@ module.exports = (getMaps, setPoints) =>
                     const ret = node.body.body.find(
                         x => x.type === 'ReturnStatement'
                     );
-                    if (ret.argument.type == 'Identifier') {
-                        // TODO: cleanup this block of code
-                        if (variableToTypeMap[ret.argument.name]) {
-                            functionToTypeMap[node.id.name] =
-                                variableToTypeMap[ret.argument.name];
-                        }
-                        // we want this to override variables
-                        if (
-                            argumentToTypeMap[
-                                `${node.id.name}::${ret.argument.name}`
-                            ]
-                        ) {
-                            functionToTypeMap[node.id.name] =
-                                argumentToTypeMap[
-                                    `${node.id.name}::${ret.argument.name}`
-                                ];
-                        }
+
+                    // only one array element may be present in the map
+                    if (functionToTypeMap[node.id.name][0] == 'any') {
+                        // let's see if we can get more specific
+                        functionToTypeMap[node.id.name] = deduceType(
+                            ret.argument,
+                            [
+                                variableToTypeMap,
+                                functionToTypeMap,
+                                argumentToTypeMap
+                            ],
+                            node.id
+                        );
                     }
 
                     node.params.forEach((param, index) => {
