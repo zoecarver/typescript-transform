@@ -2,6 +2,24 @@
 
 This is a WIP tool for generating typescript from javascript. Contributions are welcome!
 
+## Usage:
+
+```
+Usage: index <file> [options]
+
+Options:
+  -V, --version          output the version number
+  -i, --interactive      Ask about each type before adding it
+  -a, --auto             Pick the types for me
+  -o, --output [output]  Output file. Defaults to stdout
+  -h, --help             output usage information
+```
+
+-   Run `node index.js input.js -o output.ts` to convert `input.js` to typescript and save it to `output.ts`.
+-   You will be prompted for every variable, function, and argument. To pick the default hit enter. To auto pick the types, pass the `--auto` option.
+-   To skip a type just enter `skip`.
+-   To use generics in a function enter `template`. This will walk you through creating a template.
+
 ## Example:
 
 **Input**
