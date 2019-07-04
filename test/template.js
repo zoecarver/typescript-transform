@@ -1,3 +1,5 @@
 function fn(a, b, c) {
-    return 0;
+    return null;
 }
+
+fn('0', 1, true);
