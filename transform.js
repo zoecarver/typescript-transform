@@ -4,7 +4,7 @@ const { deduceType } = require('./type-deduction');
 
 let offset = 0;
 
-module.exports = (getMaps, addInsertPoint) =>
+module.exports = (isInteractive, getMaps, addInsertPoint) =>
     function(babel) {
         const [
             variableToTypeMap,
@@ -22,6 +22,7 @@ module.exports = (getMaps, addInsertPoint) =>
                         variableToTypeMap[node.id.name]
                     );
                     const type = promptType(
+                        isInteractive,
                         node.id.name,
                         deduced,
                         () => null // templates shouldn't work for variable declarations
@@ -65,7 +66,12 @@ module.exports = (getMaps, addInsertPoint) =>
                         const deduced = getAnnotation(
                             argumentToTypeMap[`${node.id.name}::${param.name}`]
                         );
-                        const type = promptType(param.name, deduced, addTmpl);
+                        const type = promptType(
+                            isInteractive,
+                            param.name,
+                            deduced,
+                            addTmpl
+                        );
                         offset += addTypeAnnotation(param, type);
                     });
 
@@ -74,6 +80,7 @@ module.exports = (getMaps, addInsertPoint) =>
                         functionToTypeMap[node.id.name]
                     );
                     const returnType = promptType(
+                        isInteractive,
                         node.id.name,
                         deducedReturnAnnotation,
                         addTmpl

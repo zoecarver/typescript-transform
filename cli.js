@@ -1,6 +1,11 @@
 const readLineSync = require('readline-sync');
 
-function promptType(name, deduced, addTemplate) {
+function promptType(isInteractive, name, deduced, addTemplate) {
+    if (!isInteractive) {
+        console.log(`auto picked type ${deduced} for ${name}`);
+        return deduced;
+    }
+
     let type = readLineSync.question(`what type is ${name} [ ${deduced} ]:`);
     switch (type) {
         case 'skip':
