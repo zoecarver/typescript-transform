@@ -1,11 +1,10 @@
-const { getType, addTypeAnnotation } = require('./util');
+const { getType, addTypeAnnotation, getAnnotation } = require('./util');
 const { promptType, printVariableDecl, printFunctionDecl } = require('./cli');
 const { deduceType } = require('./type-deduction');
 
-let functionTypeInsertPoints = [];
 let offset = 0;
 
-module.exports = (getMaps, setPoints) =>
+module.exports = (getMaps, addInsertPoint) =>
     function(babel) {
         const [
             variableToTypeMap,
@@ -18,9 +17,14 @@ module.exports = (getMaps, setPoints) =>
             visitor: {
                 VariableDeclarator: function({ node }) {
                     printVariableDecl.bind(this)(node);
+
+                    const deduced = getAnnotation(
+                        variableToTypeMap[node.id.name]
+                    );
                     const type = promptType(
                         node.id.name,
-                        variableToTypeMap[node.id.name]
+                        deduced,
+                        () => null // templates shouldn't work for variable declarations
                     );
 
                     offset += addTypeAnnotation(node.id, type);
@@ -49,33 +53,37 @@ module.exports = (getMaps, setPoints) =>
                         );
                     }
 
+                    // this needs to be declared before parameters are added
+                    // ...otherwise offset will be wrong
+                    const templateOffset = new Number(node.id.end + offset);
+                    const addTmpl = tmpl =>
+                        addInsertPoint(templateOffset, tmpl);
+
                     // map the argument types
                     // this should come first so the offset is correct
                     node.params.forEach((param, index) => {
-                        const type = promptType(
-                            param.name,
+                        const deduced = getAnnotation(
                             argumentToTypeMap[`${node.id.name}::${param.name}`]
                         );
-
+                        const type = promptType(param.name, deduced, addTmpl);
                         offset += addTypeAnnotation(param, type);
                     });
 
                     // function return type for later
+                    const deducedReturnAnnotation = getAnnotation(
+                        functionToTypeMap[node.id.name]
+                    );
                     const returnType = promptType(
                         node.id.name,
-                        functionToTypeMap[node.id.name]
+                        deducedReturnAnnotation,
+                        addTmpl
                     );
 
                     if (returnType) {
-                        functionTypeInsertPoints.push({
-                            point: node.body.start + offset - 1,
-                            type: returnType
-                        });
-                    }
-                },
-                Program: {
-                    exit: function() {
-                        setPoints(functionTypeInsertPoints);
+                        addInsertPoint(
+                            node.body.start + offset - 1,
+                            `:${returnType}`
+                        );
                     }
                 }
             }

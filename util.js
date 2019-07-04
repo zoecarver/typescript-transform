@@ -41,13 +41,16 @@ function getType(node, def = 'any') {
     return mapType(node.type, def);
 }
 
-function addTypeAnnotation(node, types) {
-    if (!types) return;
+function getAnnotation(types) {
+    if (!types) return 'any';
+    return types instanceof Array ? types.join('|') : types;
+}
 
-    const typeAnnotation =
-        types instanceof Array ? ':' + types.join('|') : `:${types}`;
-    node.name += typeAnnotation;
-    return typeAnnotation.length;
+function addTypeAnnotation(node, typeAnnotation) {
+    if (!typeAnnotation) return 0; // the user said "skip"
+
+    node.name += `:${typeAnnotation}`;
+    return typeAnnotation.length + 1; // +1 for the ":"
 }
 
 // extentions
@@ -63,4 +66,4 @@ String.prototype.insert = function(index, string) {
     return string + this;
 };
 
-module.exports = { matchLiteral, getType, addTypeAnnotation };
+module.exports = { matchLiteral, getType, addTypeAnnotation, getAnnotation };

@@ -1,6 +1,6 @@
 const readLineSync = require('readline-sync');
 
-function promptType(name, deduced) {
+function promptType(name, deduced, addTemplate) {
     let type = readLineSync.question(`what type is ${name} [ ${deduced} ]:`);
     switch (type) {
         case 'skip':
@@ -8,10 +8,24 @@ function promptType(name, deduced) {
         case '':
             type = deduced;
             break;
+        case 'template':
+            addTemplate(getTemplate());
+            return promptType(name, deduced, addTemplate);
         default:
             break;
     }
     return type;
+}
+
+function getTemplate() {
+    let templ = readLineSync.question('enter full template [ help ]:');
+    if (templ === 'help' || templ === '') {
+        console.log(
+            'This template will be inserted between the function name and the opening parentheses. Enter the full template expression below, for example you might enter "<T>" or "<T extends keyof Obj>" or "<T, U>". For more help open an issue on GitHub.'
+        );
+        return getTemplate();
+    }
+    return templ;
 }
 
 function printFunctionDecl(node) {

@@ -7,7 +7,7 @@ const fileName = process.argv[2];
 let variableToTypeMap;
 let functionToTypeMap;
 let argumentToTypeMap;
-let functionTypeInsertPoints;
+let insertPoints = new Array();
 let offset = 0;
 
 function getMaps() {
@@ -20,16 +20,14 @@ function setMaps([_variableToTypeMap, _functionToTypeMap, _argumentToTypeMap]) {
     argumentToTypeMap = _argumentToTypeMap;
 }
 
-function setPoints(points) {
-    functionTypeInsertPoints = points;
+function addInsertPoint(point, value) {
+    insertPoints.push({ point, value });
 }
 
-function parseFunctionTypeInsertPoints(code) {
-    functionTypeInsertPoints.map(({ point, type }, index) => {
-        const typeAnnotation =
-            type instanceof Array ? `:${type.join('|')}` : `:${type}`;
-        code = code.insert(point + offset, typeAnnotation);
-        offset += typeAnnotation.length;
+function parseInsertPoints(code) {
+    insertPoints.map(({ point, value }) => {
+        code = code.insert(point + offset, value);
+        offset += value.length;
     });
     return code;
 }
@@ -42,11 +40,11 @@ fs.readFile(fileName, (err, data) => {
         plugins: [parse(setMaps)]
     });
 
-    const output = babel.transform(src, {
-        plugins: [transform(getMaps, setPoints)]
+    let { code } = babel.transform(src, {
+        plugins: [transform(getMaps, addInsertPoint)]
     });
 
-    const code = parseFunctionTypeInsertPoints(output.code);
+    code = parseInsertPoints(code);
 
     if (process.argv[3]) console.log(`\n${code}`);
 });
