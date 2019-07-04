@@ -4,11 +4,19 @@ function matchLiteral(literal) {
 }
 
 function mapType(type, def = 'any') {
+    // // TODO: directiveLiteral
+
     switch (type) {
         case 'NumericLiteral':
             return 'number';
         case 'StringLiteral':
             return 'string';
+        case 'BigIntLiteral':
+            return 'BigInt';
+        case 'BooleanLiteral':
+            return 'boolean';
+        case 'NullLiteral':
+            return 'null';
         default:
             return def;
     }
