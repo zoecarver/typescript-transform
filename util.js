@@ -42,7 +42,10 @@ function getType(node, def = 'any') {
 }
 
 function addTypeAnnotation(node, types) {
-    const typeAnnotation = ':' + types.join('|');
+    if (!types) return;
+
+    const typeAnnotation =
+        types instanceof Array ? ':' + types.join('|') : `:${types}`;
     node.name += typeAnnotation;
     return typeAnnotation.length;
 }

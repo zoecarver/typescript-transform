@@ -26,7 +26,8 @@ function setPoints(points) {
 
 function parseFunctionTypeInsertPoints(code) {
     functionTypeInsertPoints.map(({ point, type }, index) => {
-        const typeAnnotation = `:${type.join('|')}`;
+        const typeAnnotation =
+            type instanceof Array ? `:${type.join('|')}` : `:${type}`;
         code = code.insert(point + offset, typeAnnotation);
         offset += typeAnnotation.length;
     });
@@ -46,5 +47,6 @@ fs.readFile(fileName, (err, data) => {
     });
 
     const code = parseFunctionTypeInsertPoints(output.code);
-    console.log('\n', code);
+
+    if (process.argv[3]) console.log(`\n${code}`);
 });

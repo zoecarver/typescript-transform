@@ -59,13 +59,6 @@ module.exports = setMaps =>
                         });
                     }
                 },
-                Identifier: function(path) {
-                    if (path.getStatementParent().type === 'ReturnStatement') {
-                        if (path.getFunctionParent().id) {
-                            console.log(path.getFunctionParent().id);
-                        }
-                    }
-                },
                 Program: {
                     exit: function() {
                         setMaps([
@@ -73,10 +66,12 @@ module.exports = setMaps =>
                             functionToTypeMap,
                             argumentToTypeMap
                         ]);
-                        console.log(variableToTypeMap);
-                        console.log(functionToTypeMap);
-                        console.log(argumentToTypeMap);
-                        console.log('\n******************************\n');
+                        if (/*VERBOSE*/ false) {
+                            console.log(variableToTypeMap);
+                            console.log(functionToTypeMap);
+                            console.log(argumentToTypeMap);
+                            console.log('\n******************************\n');
+                        }
                     }
                 }
             }

@@ -10,5 +10,10 @@
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.26.3"
+  },
+  "dependencies": {
+    "n-readlines": "^1.0.0",
+    "prompts": "^2.1.0",
+    "readline-sync": "^1.4.9"
   }
 }

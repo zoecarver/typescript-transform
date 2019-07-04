@@ -32,7 +32,7 @@ function deduceType(node, maps, currentFunction) {
         return deduceType(node.callee, maps, currentFunction);
     }
 
-    console.log('return type: ', returnType);
+    if (/*VERBOSE*/ false) console.log('return type: ', returnType);
     return returnType;
 }
 
