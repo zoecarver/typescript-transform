@@ -21,10 +21,10 @@ if (commander.interactive && commander.auto)
 const interactive = commander.interactive || !commander.auto;
 
 const fileName = process.argv[2];
-let variableToTypeMap;
-let functionToTypeMap;
-let argumentToTypeMap;
-let insertPoints = new Array();
+let variableToTypeMap = [];
+let functionToTypeMap = [];
+let argumentToTypeMap = [];
+let insertPoints = [];
 let offset = 0;
 
 function getMaps() {
@@ -51,15 +51,17 @@ function parseInsertPoints(code) {
 
 const src = fs.readFileSync(fileName).toString();
 
-babel.transform(src, {
+let { code } = babel.transform(src, {
     plugins: [parse(setMaps)]
 });
 
-let { code } = babel.transform(src, {
+code = babel.transform(code, {
     plugins: [transform(interactive, getMaps, addInsertPoint)]
-});
+}).code;
 
 code = parseInsertPoints(code);
+
+console.log(insertPoints);
 
 if (commander.output) fs.writeFileSync(commander.output, code);
 else console.log(code);

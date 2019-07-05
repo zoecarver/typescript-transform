@@ -1,4 +1,5 @@
 const { getType } = require('./util');
+const { deduceType } = require('./type-deduction');
 
 let variableToTypeMap = new Object();
 let functionToTypeMap = new Object();
@@ -10,17 +11,32 @@ module.exports = setMaps =>
         return {
             visitor: {
                 VariableDeclarator: function({ node }) {
-                    variableToTypeMap[node.id.name] = [getType(node.init)];
+                    if (!node.init) return; // we will have to infer this later
+                    // handling closures: don't
+                    if (node.init.type === 'ArrowFunctionExpression') return;
+                    // can't handle destructing props yet
+                    if (node.id.type === 'ObjectPattern') return;
+
+                    variableToTypeMap[node.id.name] = [
+                        deduceType(node.init, [
+                            variableToTypeMap,
+                            functionToTypeMap,
+                            argumentToTypeMap
+                        ])
+                    ];
                 },
                 AssignmentExpression: function({ node }) {
+                    const deduced = deduceType(node.right, [
+                        variableToTypeMap,
+                        functionToTypeMap,
+                        argumentToTypeMap
+                    ]);
+                    if (!deduced) return;
+
                     if (variableToTypeMap[node.left.name] instanceof Array) {
-                        variableToTypeMap[node.left.name].push(
-                            getType(node.right)
-                        );
+                        variableToTypeMap[node.left.name].push(deduced);
                     } else {
-                        variableToTypeMap[node.left.name] = [
-                            getType(node.right.type)
-                        ];
+                        variableToTypeMap[node.left.name] = [deduced];
                     }
                 },
                 FunctionDeclaration: function({ node }) {
@@ -35,6 +51,10 @@ module.exports = setMaps =>
                     );
                 },
                 CallExpression: function({ node }) {
+                    // functions may not exist because they were declared as variables
+                    // ...or some other reason. In that case, we want to exit early
+                    if (!functionToArgsMap[node.callee.name]) return;
+
                     if (
                         argumentToTypeMap[
                             `${node.callee.name}::${
@@ -66,7 +86,7 @@ module.exports = setMaps =>
                             functionToTypeMap,
                             argumentToTypeMap
                         ]);
-                        if (/*VERBOSE*/ false) {
+                        if (/*VERBOSE*/ true) {
                             console.log(variableToTypeMap);
                             console.log(functionToTypeMap);
                             console.log(argumentToTypeMap);

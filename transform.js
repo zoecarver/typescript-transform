@@ -16,6 +16,15 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
         return {
             visitor: {
                 VariableDeclarator: function({ node }) {
+                    // right now we arent doing closures
+                    if (
+                        node.init &&
+                        node.init.type === 'ArrowFunctionExpression'
+                    )
+                        return;
+                    // can't handle destructing props yet
+                    if (node.id.type === 'ObjectPattern') return;
+
                     printVariableDecl.bind(this)(node);
 
                     const deduced = getAnnotation(
@@ -27,7 +36,6 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                         deduced,
                         () => null // templates shouldn't work for variable declarations
                     );
-
                     offset += addTypeAnnotation(node.id, type);
                 },
                 FunctionDeclaration: function({ node }) {
@@ -41,7 +49,11 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
 
                     // finding the return value of the function
                     // only one array element may be present in the map
-                    if (functionToTypeMap[node.id.name][0] == 'any' && ret) {
+                    if (
+                        (!functionToTypeMap[node.id.name] ||
+                            functionToTypeMap[node.id.name][0] == 'any') &&
+                        ret
+                    ) {
                         // let's see if we can get more specific
                         functionToTypeMap[node.id.name] = deduceType(
                             ret.argument,
@@ -76,9 +88,11 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                     });
 
                     // function return type for later
-                    const deducedReturnAnnotation = getAnnotation(
-                        functionToTypeMap[node.id.name]
-                    );
+                    const deducedReturnAnnotation = functionToTypeMap[
+                        node.id.name
+                    ]
+                        ? getAnnotation(functionToTypeMap[node.id.name])
+                        : 'void';
                     const returnType = promptType(
                         isInteractive,
                         node.id.name,

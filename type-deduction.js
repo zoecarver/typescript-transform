@@ -30,6 +30,9 @@ function deduceType(node, maps, currentFunction) {
             deduceType(node.right, maps, currentFunction);
     } else if (node.type === 'CallExpression') {
         return deduceType(node.callee, maps, currentFunction);
+    } else if (node.type === 'UnaryExpression') {
+        if (node.operator === '!') return 'boolean';
+        return deduceType(node.argument);
     }
 
     if (/*VERBOSE*/ false) console.log('return type: ', returnType);
