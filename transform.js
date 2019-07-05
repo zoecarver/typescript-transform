@@ -28,7 +28,8 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                     printVariableDecl.bind(this)(node);
 
                     const deduced = getAnnotation(
-                        variableToTypeMap[node.id.name]
+                        variableToTypeMap[node.id.name],
+                        t
                     );
                     const type = promptType(
                         isInteractive,
@@ -62,7 +63,8 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                                 functionToTypeMap,
                                 argumentToTypeMap
                             ],
-                            node.id
+                            node.id,
+                            t
                         );
                     }
 
@@ -76,7 +78,8 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                     // this should come first so the offset is correct
                     node.params.forEach((param, index) => {
                         const deduced = getAnnotation(
-                            argumentToTypeMap[`${node.id.name}::${param.name}`]
+                            argumentToTypeMap[`${node.id.name}::${param.name}`],
+                            t
                         );
                         const type = promptType(
                             isInteractive,
@@ -84,14 +87,14 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                             deduced,
                             addTmpl
                         );
-                        offset += addTypeAnnotation(param, type);
+                        addTypeAnnotation(param, type);
                     });
 
                     // function return type for later
                     const deducedReturnAnnotation = functionToTypeMap[
                         node.id.name
                     ]
-                        ? getAnnotation(functionToTypeMap[node.id.name])
+                        ? getAnnotation(functionToTypeMap[node.id.name], t)
                         : 'void';
                     const returnType = promptType(
                         isInteractive,

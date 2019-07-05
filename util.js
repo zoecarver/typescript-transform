@@ -3,29 +3,27 @@ function matchLiteral(literal) {
     else if (true) return 'string';
 }
 
-function mapType(type, def = 'any') {
-    // // TODO: directiveLiteral
+function mapType(type, t) {
+    // TODO: directiveLiteral
 
     switch (type) {
         case 'NumericLiteral':
-            return 'number';
+            return t.numberTypeAnnotation();
         case 'StringLiteral':
-            return 'string';
-        case 'BigIntLiteral':
-            return 'BigInt';
+            return t.stringTypeAnnotation();
         case 'BooleanLiteral':
-            return 'boolean';
+            return t.booleanTypeAnnotation();
         case 'NullLiteral':
-            return 'null';
+            return t.nullLiteralTypeAnnotation();
         default:
-            return def;
+            return t.anyTypeAnnotation();
     }
 }
 
-function multiTypeArray(elements) {
+function multiTypeArray(elements, t) {
     let types = new Set();
-    elements.map(x => types.add(mapType(x.type)));
-    return `Array<${Array.from(types).join('|')}>`;
+    elements.map(x => types.add(mapType(x.type, t)));
+    return types;
 }
 
 function typesDiffer(elements) {
@@ -36,29 +34,26 @@ function typesDiffer(elements) {
     return false;
 }
 
-function getType(node, def = 'any') {
+function getType(node, t) {
     const isArray = node.type === 'ArrayExpression';
 
     if (isArray) {
-        if (node.elements.length == 0) return 'any[]';
-        if (typesDiffer(node.elements)) return multiTypeArray(node.elements);
-
-        const baseType = mapType(node.elements[0].type, def);
-        return baseType + '[]';
+        if (node.elements.length == 0) return t.tupleTypeAnnotation();
+        return t.tupleTypeAnnotation(multiTypeArray(node.elements, t));
     }
-    return mapType(node.type, def);
+    return mapType(node.type, t);
 }
 
-function getAnnotation(types) {
-    if (!types) return 'any';
-    return types instanceof Array ? types.join('|') : types;
+function getAnnotation(types, t) {
+    if (!types) return t.anyTypeAnnotation();
+    return types instanceof Array
+        ? t.unionTypeAnnotation(types.map(x => mapType(x, t)))
+        : mapType(types, t);
 }
 
 function addTypeAnnotation(node, typeAnnotation) {
-    if (!typeAnnotation) return 0; // the user said "skip"
-
-    node.name += `:${typeAnnotation}`;
-    return typeAnnotation.length + 1; // +1 for the ":"
+    if (!typeAnnotation) return; // the user said "skip"
+    node.typeAnnotation = typeAnnotation;
 }
 
 // extentions

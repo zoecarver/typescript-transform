@@ -8,6 +8,8 @@ let functionToArgsMap = new Object();
 
 module.exports = setMaps =>
     function(babel) {
+        const t = babel.types;
+
         return {
             visitor: {
                 VariableDeclarator: function({ node }) {
@@ -18,19 +20,29 @@ module.exports = setMaps =>
                     if (node.id.type === 'ObjectPattern') return;
 
                     variableToTypeMap[node.id.name] = [
-                        deduceType(node.init, [
-                            variableToTypeMap,
-                            functionToTypeMap,
-                            argumentToTypeMap
-                        ])
+                        deduceType(
+                            node.init,
+                            [
+                                variableToTypeMap,
+                                functionToTypeMap,
+                                argumentToTypeMap
+                            ],
+                            null,
+                            t
+                        )
                     ];
                 },
                 AssignmentExpression: function({ node }) {
-                    const deduced = deduceType(node.right, [
-                        variableToTypeMap,
-                        functionToTypeMap,
-                        argumentToTypeMap
-                    ]);
+                    const deduced = deduceType(
+                        node.right,
+                        [
+                            variableToTypeMap,
+                            functionToTypeMap,
+                            argumentToTypeMap
+                        ],
+                        null,
+                        t
+                    );
                     if (!deduced) return;
 
                     if (variableToTypeMap[node.left.name] instanceof Array) {
@@ -45,7 +57,9 @@ module.exports = setMaps =>
                     );
                     if (!ret) return; // // TODO: arguments are []
 
-                    functionToTypeMap[node.id.name] = [getType(ret.argument)];
+                    functionToTypeMap[node.id.name] = [
+                        getType(ret.argument, t)
+                    ];
                     functionToArgsMap[node.id.name] = node.params.map(
                         x => x.name
                     );
@@ -67,7 +81,7 @@ module.exports = setMaps =>
                                 `${node.callee.name}::${
                                     functionToArgsMap[node.callee.name][index]
                                 }`
-                            ].push(getType(arg));
+                            ].push(getType(arg, t));
                         });
                     } else {
                         node.arguments.forEach((arg, index) => {
@@ -75,7 +89,7 @@ module.exports = setMaps =>
                                 `${node.callee.name}::${
                                     functionToArgsMap[node.callee.name][index]
                                 }`
-                            ] = [getType(arg)];
+                            ] = [getType(arg, t)];
                         });
                     }
                 },

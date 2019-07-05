@@ -1,6 +1,23 @@
 const readLineSync = require('readline-sync');
 
-function promptType(isInteractive, name, deduced, addTemplate) {
+function printTypeAnnotation(annotation) {
+    switch (annotation.type) {
+        case 'NumberTypeAnnotation':
+            return 'number';
+        case 'StringTypeAnnotation':
+            return 'string';
+        case 'BooleanTypeAnnotation':
+            return 'boolean';
+        case 'NullTypeAnnotation':
+            return 'null';
+        default:
+            return 'any';
+    }
+}
+
+function promptType(isInteractive, name, deducedType, addTemplate) {
+    const deduced = printTypeAnnotation(deducedType);
+
     if (!isInteractive) {
         console.log(`auto picked type ${deduced} for ${name}`);
         return deduced;
@@ -11,11 +28,11 @@ function promptType(isInteractive, name, deduced, addTemplate) {
         case 'skip':
             return;
         case '':
-            type = deduced;
+            type = deducedType;
             break;
         case 'template':
             addTemplate(getTemplate());
-            return promptType(name, deduced, addTemplate);
+            return promptType(isInteractive, name, deducedType, addTemplate);
         default:
             break;
     }
