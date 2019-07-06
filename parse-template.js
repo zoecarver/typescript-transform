@@ -18,7 +18,7 @@ module.exports = function(templateSnippet) {
     babel.transform(`function fn${templateSnippet}(){}`, {
         presets: ["@babel/preset-typescript"],
         plugins: [plug],
-        filename: '_.ts'
+        filename: '_.ts' // lovely hack
     });
 
     return typeArgs;
