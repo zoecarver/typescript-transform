@@ -24,8 +24,6 @@ const fileName = process.argv[2];
 let variableToTypeMap = [];
 let functionToTypeMap = [];
 let argumentToTypeMap = [];
-let insertPoints = [];
-let offset = 0;
 
 function getMaps() {
     return [variableToTypeMap, functionToTypeMap, argumentToTypeMap];
@@ -37,18 +35,6 @@ function setMaps([_variableToTypeMap, _functionToTypeMap, _argumentToTypeMap]) {
     argumentToTypeMap = _argumentToTypeMap;
 }
 
-function addInsertPoint(point, value) {
-    insertPoints.push({ point, value });
-}
-
-function parseInsertPoints(code) {
-    insertPoints.map(({ point, value }) => {
-        code = code.insert(point + offset, value);
-        offset += value.length;
-    });
-    return code;
-}
-
 const src = fs.readFileSync(fileName).toString();
 
 let { code } = babel.transform(src, {
@@ -56,10 +42,8 @@ let { code } = babel.transform(src, {
 });
 
 code = babel.transform(code, {
-    plugins: [transform(interactive, getMaps, addInsertPoint)]
+    plugins: [transform(interactive, getMaps)]
 }).code;
-
-code = parseInsertPoints(code);
 
 if (commander.output) fs.writeFileSync(commander.output, code);
 else console.log(code);

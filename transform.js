@@ -2,9 +2,7 @@ const { getType, addTypeAnnotation } = require('./util');
 const { promptType, printVariableDecl, printFunctionDecl } = require('./cli');
 const { deduceType } = require('./type-deduction');
 
-let offset = 0;
-
-module.exports = (isInteractive, getMaps, addInsertPoint) =>
+module.exports = (isInteractive, getMaps) =>
     function(babel) {
         const [
             variableToTypeMap,
@@ -66,12 +64,6 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                             t
                         );
                     }
-
-                    // this needs to be declared before parameters are added
-                    // ...otherwise offset will be wrong
-                    const templateOffset = new Number(node.id.end + offset);
-                    const addTmpl = tmpl =>
-                        addInsertPoint(templateOffset, tmpl);
 
                     // map the argument types
                     // this should come first so the offset is correct
