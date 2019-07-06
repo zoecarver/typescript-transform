@@ -9,12 +9,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "babel-core": "^6.26.3"
+    "@babel/core": "7.5.0"
   },
   "dependencies": {
     "commander": "^2.20.0",
-    "n-readlines": "^1.0.0",
-    "prompts": "^2.1.0",
     "readline-sync": "^1.4.9"
   }
 }

@@ -4,18 +4,13 @@
 //
 // fn('0', 1, true);
 
-const x = ''
-    .reverse()
-    .reverse()
-    .reverse().length;
+// const x = 0;
+// x = 'hello';
+//
+// const y = ['hello', 0];
 
-const fileName = '';
-let variableToTypeMap = [];
-let functionToTypeMap = [];
-let argumentToTypeMap = [];
-let insertPoints = [];
-let offset = 0;
-
-function getMaps() {
-    return [variableToTypeMap, functionToTypeMap, argumentToTypeMap];
+function fn(a, b) {
+    return a + x;
 }
+
+fn(0, 'hello')

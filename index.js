@@ -1,5 +1,5 @@
 const fs = require('fs');
-const babel = require('babel-core');
+const babel = require('@babel/core');
 const parse = require('./parse');
 const transform = require('./transform');
 const commander = require('commander');

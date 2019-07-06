@@ -19,8 +19,7 @@ module.exports = setMaps =>
                     // can't handle destructing props yet
                     if (node.id.type === 'ObjectPattern') return;
 
-                    variableToTypeMap[node.id.name] = [
-                        deduceType(
+                    const deduced = deduceType(
                             node.init,
                             [
                                 variableToTypeMap,
@@ -29,8 +28,8 @@ module.exports = setMaps =>
                             ],
                             null,
                             t
-                        )
-                    ];
+                        );
+                    variableToTypeMap[node.id.name] = deduced;
                 },
                 AssignmentExpression: function({ node }) {
                     const deduced = deduceType(
@@ -46,9 +45,9 @@ module.exports = setMaps =>
                     if (!deduced) return;
 
                     if (variableToTypeMap[node.left.name] instanceof Array) {
-                        variableToTypeMap[node.left.name].push(deduced);
+                        deduced.forEach(dType => variableToTypeMap[node.left.name].push(dType));
                     } else {
-                        variableToTypeMap[node.left.name] = [deduced];
+                        variableToTypeMap[node.left.name] = deduced;
                     }
                 },
                 FunctionDeclaration: function({ node }) {

@@ -1,4 +1,4 @@
-const { getType, addTypeAnnotation, getAnnotation } = require('./util');
+const { getType, addTypeAnnotation } = require('./util');
 const { promptType, printVariableDecl, printFunctionDecl } = require('./cli');
 const { deduceType } = require('./type-deduction');
 
@@ -16,6 +16,7 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
         return {
             visitor: {
                 VariableDeclarator: function({ node }) {
+                    // TODO: try harder with the deduction
                     // right now we arent doing closures
                     if (
                         node.init &&
@@ -27,17 +28,14 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
 
                     printVariableDecl.bind(this)(node);
 
-                    const deduced = getAnnotation(
-                        variableToTypeMap[node.id.name],
-                        t
-                    );
+                    const deduced = variableToTypeMap[node.id.name];
                     const type = promptType(
                         isInteractive,
                         node.id.name,
-                        deduced,
+                        deduced && t.tsUnionType(deduced),
                         () => null // templates shouldn't work for variable declarations
                     );
-                    offset += addTypeAnnotation(node.id, type);
+                    addTypeAnnotation(node.id, type, t);
                 },
                 FunctionDeclaration: function({ node }) {
                     // if we return an identifier, we might already know what type it is
@@ -52,7 +50,7 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                     // only one array element may be present in the map
                     if (
                         (!functionToTypeMap[node.id.name] ||
-                            functionToTypeMap[node.id.name][0] == 'any') &&
+                            functionToTypeMap[node.id.name][0].type == 'TSAnyKeyword') &&
                         ret
                     ) {
                         // let's see if we can get more specific
@@ -77,9 +75,8 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                     // map the argument types
                     // this should come first so the offset is correct
                     node.params.forEach((param, index) => {
-                        const deduced = getAnnotation(
-                            argumentToTypeMap[`${node.id.name}::${param.name}`],
-                            t
+                        const deduced = t.tsUnionType(
+                            argumentToTypeMap[`${node.id.name}::${param.name}`] || []
                         );
                         const type = promptType(
                             isInteractive,
@@ -87,28 +84,21 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                             deduced,
                             addTmpl
                         );
-                        addTypeAnnotation(param, type);
+                        // because this is a union we check types
+                        if (type.types.length) addTypeAnnotation(param, type, t);
                     });
 
                     // function return type for later
-                    const deducedReturnAnnotation = functionToTypeMap[
-                        node.id.name
-                    ]
-                        ? getAnnotation(functionToTypeMap[node.id.name], t)
-                        : 'void';
+                    const deducedReturnAnnotation = functionToTypeMap[node.id.name]
+                        || [t.tsVoidKeyword()];
                     const returnType = promptType(
                         isInteractive,
                         node.id.name,
-                        deducedReturnAnnotation,
+                        deducedReturnAnnotation && t.tsUnionType(deducedReturnAnnotation),
                         addTmpl
                     );
-
-                    if (returnType) {
-                        addInsertPoint(
-                            node.body.start + offset - 1,
-                            `:${returnType}`
-                        );
-                    }
+                    // because this is a union we check types
+                    if (returnType.types.length) addTypeAnnotation(node, returnType, t);
                 }
             }
         };

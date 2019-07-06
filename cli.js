@@ -1,21 +1,28 @@
 const readLineSync = require('readline-sync');
 
 function printTypeAnnotation(annotation) {
+    if (!annotation) return '';
+
     switch (annotation.type) {
-        case 'NumberTypeAnnotation':
+        case 'TSNumberKeyword':
             return 'number';
-        case 'StringTypeAnnotation':
+        case 'TSStringKeyword':
             return 'string';
-        case 'BooleanTypeAnnotation':
+        case 'TSBooleanKeyword':
             return 'boolean';
-        case 'NullTypeAnnotation':
+        case 'TSNullKeyword':
             return 'null';
+        case 'TSUnionType':
+            return annotation.types.map(x => printTypeAnnotation(x)).join('|')
+        case 'TSTupleType':
+            return annotation.elementTypes.map(x => printTypeAnnotation(x)).join(', ')
         default:
             return 'any';
     }
 }
 
 function promptType(isInteractive, name, deducedType, addTemplate) {
+    console.log(deducedType)
     const deduced = printTypeAnnotation(deducedType);
 
     if (!isInteractive) {
