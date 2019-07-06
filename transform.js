@@ -22,7 +22,8 @@ module.exports = (isInteractive, getMaps) =>
                     )
                         return;
                     // can't handle destructing props yet
-                    if (node.id.type === 'ObjectPattern') return;
+                    if (node.id.type === 'ObjectPattern' ||
+                        node.id.type === 'ArrayPattern') return;
 
                     printVariableDecl.bind(this)(node);
 
@@ -43,6 +44,7 @@ module.exports = (isInteractive, getMaps) =>
                     );
 
                     if (!ret && node.params.length === 0) return;
+
                     printFunctionDecl.bind(this)(node);
 
                     // finding the return value of the function
@@ -68,6 +70,10 @@ module.exports = (isInteractive, getMaps) =>
                     // map the argument types
                     // this should come first so the offset is correct
                     node.params.forEach((param, index) => {
+                        // no destruction params yet
+                        if (param.type === 'ObjectPattern' ||
+                                param.type === 'ArrayPattern') return;
+
                         const deduced = t.tsUnionType(
                             argumentToTypeMap[`${node.id.name}::${param.name}`] || []
                         );
