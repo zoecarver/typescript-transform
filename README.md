@@ -53,26 +53,28 @@ function helloX() {
 
 ```typescript
 function add(a: string | number, b: string | number): string | number {
-    return a + b;
+  return a + b;
 }
 
 add('hello ', 'world');
 add(1, 2);
 
 const x: number = 1;
-const arr: Array<number | string> = [1, 'one'];
-const obj: any = { foo: 'bar' };
+const arr: [number, string] = [1, 'one'];
+const obj = {
+  foo: 'bar'
+};
 
 function getX(): number {
-    return x;
+  return x;
 }
 
 function xPlusOne(): number {
-    return getX() + 1;
+  return getX() + 1;
 }
 
 function helloX(): string {
-    return 'hello: ' + x;
+  return 'hello: ' + x;
 }
 ```
 
