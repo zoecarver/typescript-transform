@@ -1,6 +1,34 @@
 const readLineSync = require('readline-sync');
+const parseTemplate = require('./parse-template');
 
-function promptType(isInteractive, name, deduced, addTemplate) {
+function printTypeAnnotation(annotation) {
+    if (!annotation) return '';
+
+    switch (annotation.type) {
+        case 'TSNumberKeyword':
+            return 'number';
+        case 'TSStringKeyword':
+            return 'string';
+        case 'TSBooleanKeyword':
+            return 'boolean';
+        case 'TSNullKeyword':
+            return 'null';
+        case 'TSVoidKeyword':
+            return 'void';
+        case 'TSUnionType':
+            return annotation.types.map(x => printTypeAnnotation(x)).join('|')
+        case 'TSTupleType':
+            if (annotation.elementTypes.length === 0) return '[]';
+            return annotation.elementTypes.map(x => printTypeAnnotation(x)).join(', ')
+        default:
+            return 'any';
+    }
+}
+
+function promptType(isInteractive, name, node, deducedType, t) {
+    console.log(deducedType)
+    const deduced = printTypeAnnotation(deducedType);
+
     if (!isInteractive) {
         console.log(`auto picked type ${deduced} for ${name}`);
         return deduced;
@@ -11,25 +39,28 @@ function promptType(isInteractive, name, deduced, addTemplate) {
         case 'skip':
             return;
         case '':
-            type = deduced;
+            type = deducedType;
             break;
         case 'template':
-            addTemplate(getTemplate());
-            return promptType(name, deduced, addTemplate);
+            addTemplate(node);
+            return promptType(isInteractive, name, node, deducedType, t);
         default:
+            type = t.tsUnionType([t.tsTypeReference(t.identifier(type))]);
             break;
     }
     return type;
 }
 
-function getTemplate() {
+function addTemplate(node) {
     let templ = readLineSync.question('enter full template [ help ]:');
     if (templ === 'help' || templ === '') {
         console.log(
             'This template will be inserted between the function name and the opening parentheses. Enter the full template expression below, for example you might enter "<T>" or "<T extends keyof Obj>" or "<T, U>". For more help open an issue on GitHub.'
         );
-        return getTemplate();
+        templ = getTemplate();
     }
+
+    node.typeParameters = parseTemplate(templ);
     return templ;
 }
 

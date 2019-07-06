@@ -1,31 +1,24 @@
-function matchLiteral(literal) {
-    if (/\[[0-9]+\]/.test(literal.raw)) return 'number';
-    else if (true) return 'string';
-}
-
-function mapType(type, def = 'any') {
-    // // TODO: directiveLiteral
+function mapType(type, t) {
+    // TODO: directiveLiteral
 
     switch (type) {
-        case 'NumericLiteral':
-            return 'number';
-        case 'StringLiteral':
-            return 'string';
-        case 'BigIntLiteral':
-            return 'BigInt';
-        case 'BooleanLiteral':
-            return 'boolean';
-        case 'NullLiteral':
-            return 'null';
+        case 'NumericLiteral': case 'TSNumberKeyword': case 'number':
+            return t.tsNumberKeyword();
+        case 'StringLiteral': case 'TSStringKeyword': case 'string':
+            return t.tsStringKeyword();
+        case 'BooleanLiteral': case 'TSBooleanKeyword': case 'boolean':
+            return t.tsBooleanKeyword();
+        case 'NullLiteral': case 'TSNullKeyword': case 'null':
+            return t.tsNullKeyword();
         default:
-            return def;
+            return t.tsAnyKeyword();
     }
 }
 
-function multiTypeArray(elements) {
+function multiTypeArray(elements, t) {
     let types = new Set();
-    elements.map(x => types.add(mapType(x.type)));
-    return `Array<${Array.from(types).join('|')}>`;
+    elements.map(x => types.add(mapType(x.type, t)));
+    return Array.from(types);
 }
 
 function typesDiffer(elements) {
@@ -36,29 +29,19 @@ function typesDiffer(elements) {
     return false;
 }
 
-function getType(node, def = 'any') {
+function getType(node, t) {
     const isArray = node.type === 'ArrayExpression';
-
-    if (isArray) {
-        if (node.elements.length == 0) return 'any[]';
-        if (typesDiffer(node.elements)) return multiTypeArray(node.elements);
-
-        const baseType = mapType(node.elements[0].type, def);
-        return baseType + '[]';
-    }
-    return mapType(node.type, def);
+    if (isArray)
+        return t.tsTupleType(multiTypeArray(node.elements, t));
+    return mapType(node.type, t);
 }
 
-function getAnnotation(types) {
-    if (!types) return 'any';
-    return types instanceof Array ? types.join('|') : types;
-}
-
-function addTypeAnnotation(node, typeAnnotation) {
-    if (!typeAnnotation) return 0; // the user said "skip"
-
-    node.name += `:${typeAnnotation}`;
-    return typeAnnotation.length + 1; // +1 for the ":"
+function addTypeAnnotation(node, typeAnnotation, t) {
+    if (!typeAnnotation) return; // the user said "skip"
+    if (node.type === 'FunctionDeclaration')
+        node.returnType = t.tsTypeAnnotation(typeAnnotation);
+    else
+        node.typeAnnotation = t.tsTypeAnnotation(typeAnnotation);
 }
 
 // extentions
@@ -74,4 +57,4 @@ String.prototype.insert = function(index, string) {
     return string + this;
 };
 
-module.exports = { matchLiteral, getType, addTypeAnnotation, getAnnotation };
+module.exports = { getType, addTypeAnnotation };

@@ -8,6 +8,8 @@ let functionToArgsMap = new Object();
 
 module.exports = setMaps =>
     function(babel) {
+        const t = babel.types;
+
         return {
             visitor: {
                 VariableDeclarator: function({ node }) {
@@ -17,26 +19,35 @@ module.exports = setMaps =>
                     // can't handle destructing props yet
                     if (node.id.type === 'ObjectPattern') return;
 
-                    variableToTypeMap[node.id.name] = [
-                        deduceType(node.init, [
+                    const deduced = deduceType(
+                            node.init,
+                            [
+                                variableToTypeMap,
+                                functionToTypeMap,
+                                argumentToTypeMap
+                            ],
+                            null,
+                            t
+                        );
+                    variableToTypeMap[node.id.name] = deduced;
+                },
+                AssignmentExpression: function({ node }) {
+                    const deduced = deduceType(
+                        node.right,
+                        [
                             variableToTypeMap,
                             functionToTypeMap,
                             argumentToTypeMap
-                        ])
-                    ];
-                },
-                AssignmentExpression: function({ node }) {
-                    const deduced = deduceType(node.right, [
-                        variableToTypeMap,
-                        functionToTypeMap,
-                        argumentToTypeMap
-                    ]);
+                        ],
+                        null,
+                        t
+                    );
                     if (!deduced) return;
 
                     if (variableToTypeMap[node.left.name] instanceof Array) {
-                        variableToTypeMap[node.left.name].push(deduced);
+                        deduced.forEach(dType => variableToTypeMap[node.left.name].push(dType));
                     } else {
-                        variableToTypeMap[node.left.name] = [deduced];
+                        variableToTypeMap[node.left.name] = deduced;
                     }
                 },
                 FunctionDeclaration: function({ node }) {
@@ -45,7 +56,9 @@ module.exports = setMaps =>
                     );
                     if (!ret) return; // // TODO: arguments are []
 
-                    functionToTypeMap[node.id.name] = [getType(ret.argument)];
+                    functionToTypeMap[node.id.name] = [
+                        getType(ret.argument, t)
+                    ];
                     functionToArgsMap[node.id.name] = node.params.map(
                         x => x.name
                     );
@@ -67,7 +80,7 @@ module.exports = setMaps =>
                                 `${node.callee.name}::${
                                     functionToArgsMap[node.callee.name][index]
                                 }`
-                            ].push(getType(arg));
+                            ].push(getType(arg, t));
                         });
                     } else {
                         node.arguments.forEach((arg, index) => {
@@ -75,7 +88,7 @@ module.exports = setMaps =>
                                 `${node.callee.name}::${
                                     functionToArgsMap[node.callee.name][index]
                                 }`
-                            ] = [getType(arg)];
+                            ] = [getType(arg, t)];
                         });
                     }
                 },

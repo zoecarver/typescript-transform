@@ -1,9 +1,10 @@
 const { getType } = require('./util');
 
-function deduceType(node, maps, currentFunction) {
+// returns array
+function deduceType(node, maps, currentFunction, t) {
     // if we can get literal type, do that
-    const literalType = getType(node, null);
-    if (literalType) return [literalType];
+    const literalType = getType(node, t);
+    if (literalType.type !== 'TSAnyKeyword') return [literalType];
 
     const [variableToTypeMap, functionToTypeMap, argumentToTypeMap] = maps;
     let returnType;
@@ -26,16 +27,16 @@ function deduceType(node, maps, currentFunction) {
         }
     } else if (node.left) {
         returnType =
-            deduceType(node.left, maps, currentFunction) ||
-            deduceType(node.right, maps, currentFunction);
+            deduceType(node.left, maps, currentFunction, t) ||
+            deduceType(node.right, maps, currentFunction, t);
     } else if (node.type === 'CallExpression') {
-        return deduceType(node.callee, maps, currentFunction);
+        return deduceType(node.callee, maps, currentFunction, t);
     } else if (node.type === 'UnaryExpression') {
-        if (node.operator === '!') return 'boolean';
-        return deduceType(node.argument);
+        if (node.operator === '!') return [t.tsBooleanKeyword()];
+        return deduceType(node.argument, maps, currentFunction, t);
     }
 
-    if (/*VERBOSE*/ false) console.log('return type: ', returnType);
+    if (/*VERBOSE*/ true) console.log('return type: ', returnType);
     return returnType;
 }
 
