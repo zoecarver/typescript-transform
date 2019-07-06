@@ -99,7 +99,7 @@ module.exports = setMaps =>
                             functionToTypeMap,
                             argumentToTypeMap
                         ]);
-                        if (/*VERBOSE*/ true) {
+                        if (/*VERBOSE*/ false) {
                             console.log(variableToTypeMap);
                             console.log(functionToTypeMap);
                             console.log(argumentToTypeMap);

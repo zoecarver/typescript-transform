@@ -61,7 +61,5 @@ code = babel.transform(code, {
 
 code = parseInsertPoints(code);
 
-console.log(insertPoints);
-
 if (commander.output) fs.writeFileSync(commander.output, code);
 else console.log(code);

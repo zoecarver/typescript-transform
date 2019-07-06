@@ -26,7 +26,6 @@ function printTypeAnnotation(annotation) {
 }
 
 function promptType(isInteractive, name, node, deducedType, t) {
-    console.log(deducedType)
     const deduced = printTypeAnnotation(deducedType);
 
     if (!isInteractive) {

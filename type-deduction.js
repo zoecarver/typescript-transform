@@ -36,7 +36,7 @@ function deduceType(node, maps, currentFunction, t) {
         return deduceType(node.argument, maps, currentFunction, t);
     }
 
-    if (/*VERBOSE*/ true) console.log('return type: ', returnType);
+    if (/*VERBOSE*/ false) console.log('return type: ', returnType);
     return returnType;
 }
 
