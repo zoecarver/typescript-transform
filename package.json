@@ -12,6 +12,7 @@
     "@babel/core": "7.5.0"
   },
   "dependencies": {
+    "@babel/preset-typescript": "^7.3.3",
     "commander": "^2.20.0",
     "readline-sync": "^1.4.9"
   }

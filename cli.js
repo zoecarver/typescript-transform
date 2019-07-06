@@ -1,4 +1,5 @@
 const readLineSync = require('readline-sync');
+const parseTemplate = require('./parse-template');
 
 function printTypeAnnotation(annotation) {
     if (!annotation) return '';
@@ -21,7 +22,7 @@ function printTypeAnnotation(annotation) {
     }
 }
 
-function promptType(isInteractive, name, deducedType, addTemplate) {
+function promptType(isInteractive, name, node, deducedType, t) {
     console.log(deducedType)
     const deduced = printTypeAnnotation(deducedType);
 
@@ -38,22 +39,25 @@ function promptType(isInteractive, name, deducedType, addTemplate) {
             type = deducedType;
             break;
         case 'template':
-            addTemplate(getTemplate());
-            return promptType(isInteractive, name, deducedType, addTemplate);
+            addTemplate(node);
+            return promptType(isInteractive, name, node, deducedType, t);
         default:
+            type = t.tsUnionType([t.tsTypeReference(t.identifier(type))]);
             break;
     }
     return type;
 }
 
-function getTemplate() {
+function addTemplate(node) {
     let templ = readLineSync.question('enter full template [ help ]:');
     if (templ === 'help' || templ === '') {
         console.log(
             'This template will be inserted between the function name and the opening parentheses. Enter the full template expression below, for example you might enter "<T>" or "<T extends keyof Obj>" or "<T, U>". For more help open an issue on GitHub.'
         );
-        return getTemplate();
+        templ = getTemplate();
     }
+
+    node.typeParameters = parseTemplate(templ);
     return templ;
 }
 

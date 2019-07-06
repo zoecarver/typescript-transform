@@ -2,13 +2,13 @@ function mapType(type, t) {
     // TODO: directiveLiteral
 
     switch (type) {
-        case 'NumericLiteral': case 'TSNumberKeyword':
+        case 'NumericLiteral': case 'TSNumberKeyword': case 'number':
             return t.tsNumberKeyword();
-        case 'StringLiteral': case 'TSStringKeyword':
+        case 'StringLiteral': case 'TSStringKeyword': case 'string':
             return t.tsStringKeyword();
-        case 'BooleanLiteral': case 'TSBooleanKeyword':
+        case 'BooleanLiteral': case 'TSBooleanKeyword': case 'boolean':
             return t.tsBooleanKeyword();
-        case 'NullLiteral': case 'TSNullKeyword':
+        case 'NullLiteral': case 'TSNullKeyword': case 'null':
             return t.tsNullKeyword();
         default:
             return t.tsAnyKeyword();

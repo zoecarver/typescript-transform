@@ -32,8 +32,9 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                     const type = promptType(
                         isInteractive,
                         node.id.name,
+                        node,
                         deduced && t.tsUnionType(deduced),
-                        () => null // templates shouldn't work for variable declarations
+                        t
                     );
                     addTypeAnnotation(node.id, type, t);
                 },
@@ -81,8 +82,9 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                         const type = promptType(
                             isInteractive,
                             param.name,
+                            node, // the node to apply the template to
                             deduced,
-                            addTmpl
+                            t
                         );
                         // because this is a union we check types
                         if (type.types.length) addTypeAnnotation(param, type, t);
@@ -94,8 +96,9 @@ module.exports = (isInteractive, getMaps, addInsertPoint) =>
                     const returnType = promptType(
                         isInteractive,
                         node.id.name,
+                        node,
                         deducedReturnAnnotation && t.tsUnionType(deducedReturnAnnotation),
-                        addTmpl
+                        t
                     );
                     // because this is a union we check types
                     if (returnType.types.length) addTypeAnnotation(node, returnType, t);
