@@ -30,7 +30,7 @@ function promptType(isInteractive, name, node, deducedType, t) {
 
     if (!isInteractive) {
         console.log(`auto picked type ${deduced} for ${name}`);
-        return deduced;
+        return deducedType;
     }
 
     let type = readLineSync.question(`what type is ${name} [ ${deduced} ]:`);

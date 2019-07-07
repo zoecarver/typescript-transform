@@ -1,11 +1,16 @@
-# Typescript Transformer
+# Typescript Transform
 
-This is a WIP tool for generating typescript from javascript. Contributions are welcome!
+This is a tool for generating typescript from javascript. Contributions are welcome!
+
+## Getting Started
+
+-   `npm i -g typescript-transform`
+-   `$ typescript-transform test-file.js`
 
 ## Usage:
 
 ```
-Usage: index <file> [options]
+Usage: typescript-transform <file> [options]
 
 Options:
   -V, --version          output the version number
@@ -77,12 +82,6 @@ function helloX(): string {
   return 'hello: ' + x;
 }
 ```
-
-## Getting Started
-
--   clone this repo
--   npm install
--   `$ node index.js test-file.js`
 
 ## Disclaimer
 
