@@ -1,6 +1,11 @@
-# Typescript Transformer
+# Typescript Transform
 
 This is a tool for generating typescript from javascript. Contributions are welcome!
+
+## Getting Started
+
+-   `npm i -g typescript-transform`
+-   `$ typescript-transform test-file.js`
 
 ## Usage:
 
@@ -77,12 +82,6 @@ function helloX(): string {
   return 'hello: ' + x;
 }
 ```
-
-## Getting Started
-
--   clone this repo
--   npm install
--   `$ node index.js test-file.js`
 
 ## Disclaimer
 
