@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const babel = require('@babel/core');
 const parse = require('./parse');

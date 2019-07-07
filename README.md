@@ -1,11 +1,11 @@
 # Typescript Transformer
 
-This is a WIP tool for generating typescript from javascript. Contributions are welcome!
+This is a tool for generating typescript from javascript. Contributions are welcome!
 
 ## Usage:
 
 ```
-Usage: index <file> [options]
+Usage: typescript-transform <file> [options]
 
 Options:
   -V, --version          output the version number

@@ -1,19 +1,25 @@
 {
-  "name": "typescript-transform",
-  "version": "1.0.0",
-  "description": "A tool to generate typescript from JS",
-  "main": "plugin.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@babel/core": "7.5.0"
-  },
-  "dependencies": {
-    "@babel/preset-typescript": "^7.3.3",
-    "commander": "^2.20.0",
-    "readline-sync": "^1.4.9"
-  }
+    "name": "typescript-transform",
+    "version": "0.8.2",
+    "description": "A tool to generate typescript from JS",
+    "main": "index.js",
+    "author": "Zoe Carver (@zoecarver)",
+    "license": "Apache-2.0",
+    "scripts": {
+        "format": "prettier --write '*.js'",
+        "format:check": "prettier --check '*.js'"
+    },
+    "bin" : {
+        "typescript-transform" : "./index.js"
+    },
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/zoecarver/typescript-transform"
+    },
+    "dependencies": {
+        "@babel/core": "7.5.0",
+        "@babel/preset-typescript": "^7.3.3",
+        "commander": "^2.20.0",
+        "readline-sync": "^1.4.9"
+    }
 }

@@ -1,0 +1,10 @@
+typescript-transform is a tool for generating typescript from javascript.
+
+Usage: typescript-transform <file> [options]
+
+Options:
+  -V, --version          output the version number
+  -i, --interactive      Ask about each type before adding it
+  -a, --auto             Pick the types for me
+  -o, --output [output]  Output file. Defaults to stdout
+  -h, --help             output usage information
