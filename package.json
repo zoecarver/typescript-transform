@@ -6,15 +6,15 @@
     "author": "Zoe Carver (@zoecarver)",
     "license": "Apache-2.0",
     "scripts": {
-        "format": "prettier --write '*.js'",
-        "format:check": "prettier --check '*.js'"
+        "format": "prettier --write '*.{js,json,ts,yml}'",
+        "format:check": "prettier --check '*.{js,json,ts,yml}'"
     },
-    "bin" : {
-        "typescript-transform" : "./index.js"
+    "bin": {
+        "typescript-transform": "./index.js"
     },
     "repository": {
-        "type" : "git",
-        "url" : "https://github.com/zoecarver/typescript-transform"
+        "type": "git",
+        "url": "https://github.com/zoecarver/typescript-transform"
     },
     "dependencies": {
         "@babel/core": "7.5.0",

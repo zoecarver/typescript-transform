@@ -16,10 +16,12 @@ function printTypeAnnotation(annotation) {
         case 'TSVoidKeyword':
             return 'void';
         case 'TSUnionType':
-            return annotation.types.map(x => printTypeAnnotation(x)).join('|')
+            return annotation.types.map(x => printTypeAnnotation(x)).join('|');
         case 'TSTupleType':
             if (annotation.elementTypes.length === 0) return '[]';
-            return annotation.elementTypes.map(x => printTypeAnnotation(x)).join(', ')
+            return annotation.elementTypes
+                .map(x => printTypeAnnotation(x))
+                .join(', ');
         default:
             return 'any';
     }

@@ -22,8 +22,11 @@ module.exports = (isInteractive, getMaps) =>
                     )
                         return;
                     // can't handle destructing props yet
-                    if (node.id.type === 'ObjectPattern' ||
-                        node.id.type === 'ArrayPattern') return;
+                    if (
+                        node.id.type === 'ObjectPattern' ||
+                        node.id.type === 'ArrayPattern'
+                    )
+                        return;
 
                     printVariableDecl.bind(this)(node);
 
@@ -51,7 +54,8 @@ module.exports = (isInteractive, getMaps) =>
                     // only one array element may be present in the map
                     if (
                         (!functionToTypeMap[node.id.name] ||
-                            functionToTypeMap[node.id.name][0].type == 'TSAnyKeyword') &&
+                            functionToTypeMap[node.id.name][0].type ==
+                                'TSAnyKeyword') &&
                         ret
                     ) {
                         // let's see if we can get more specific
@@ -71,11 +75,16 @@ module.exports = (isInteractive, getMaps) =>
                     // this should come first so the offset is correct
                     node.params.forEach((param, index) => {
                         // no destruction params yet
-                        if (param.type === 'ObjectPattern' ||
-                                param.type === 'ArrayPattern') return;
+                        if (
+                            param.type === 'ObjectPattern' ||
+                            param.type === 'ArrayPattern'
+                        )
+                            return;
 
                         const deduced = t.tsUnionType(
-                            argumentToTypeMap[`${node.id.name}::${param.name}`] || []
+                            argumentToTypeMap[
+                                `${node.id.name}::${param.name}`
+                            ] || []
                         );
                         const type = promptType(
                             isInteractive,
@@ -85,21 +94,25 @@ module.exports = (isInteractive, getMaps) =>
                             t
                         );
                         // because this is a union we check types
-                        if (type.types.length) addTypeAnnotation(param, type, t);
+                        if (type.types.length)
+                            addTypeAnnotation(param, type, t);
                     });
 
                     // function return type for later
-                    const deducedReturnAnnotation = functionToTypeMap[node.id.name]
-                        || [t.tsVoidKeyword()];
+                    const deducedReturnAnnotation = functionToTypeMap[
+                        node.id.name
+                    ] || [t.tsVoidKeyword()];
                     const returnType = promptType(
                         isInteractive,
                         node.id.name,
                         node,
-                        deducedReturnAnnotation && t.tsUnionType(deducedReturnAnnotation),
+                        deducedReturnAnnotation &&
+                            t.tsUnionType(deducedReturnAnnotation),
                         t
                     );
                     // because this is a union we check types
-                    if (returnType.types.length) addTypeAnnotation(node, returnType, t);
+                    if (returnType.types.length)
+                        addTypeAnnotation(node, returnType, t);
                 }
             }
         };

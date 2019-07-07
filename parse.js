@@ -20,15 +20,15 @@ module.exports = setMaps =>
                     if (node.id.type === 'ObjectPattern') return;
 
                     const deduced = deduceType(
-                            node.init,
-                            [
-                                variableToTypeMap,
-                                functionToTypeMap,
-                                argumentToTypeMap
-                            ],
-                            null,
-                            t
-                        );
+                        node.init,
+                        [
+                            variableToTypeMap,
+                            functionToTypeMap,
+                            argumentToTypeMap
+                        ],
+                        null,
+                        t
+                    );
                     variableToTypeMap[node.id.name] = deduced;
                 },
                 AssignmentExpression: function({ node }) {
@@ -45,7 +45,9 @@ module.exports = setMaps =>
                     if (!deduced) return;
 
                     if (variableToTypeMap[node.left.name] instanceof Array) {
-                        deduced.forEach(dType => variableToTypeMap[node.left.name].push(dType));
+                        deduced.forEach(dType =>
+                            variableToTypeMap[node.left.name].push(dType)
+                        );
                     } else {
                         variableToTypeMap[node.left.name] = deduced;
                     }

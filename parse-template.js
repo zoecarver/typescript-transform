@@ -11,15 +11,15 @@ const plug = function(babel) {
                 typeArgs = node.typeParameters;
             }
         }
-    }
-}
+    };
+};
 
 module.exports = function(templateSnippet) {
     babel.transform(`function fn${templateSnippet}(){}`, {
-        presets: ["@babel/preset-typescript"],
+        presets: ['@babel/preset-typescript'],
         plugins: [plug],
         filename: '_.ts' // lovely hack
     });
 
     return typeArgs;
-}
+};

@@ -2,13 +2,21 @@ function mapType(type, t) {
     // TODO: directiveLiteral
 
     switch (type) {
-        case 'NumericLiteral': case 'TSNumberKeyword': case 'number':
+        case 'NumericLiteral':
+        case 'TSNumberKeyword':
+        case 'number':
             return t.tsNumberKeyword();
-        case 'StringLiteral': case 'TSStringKeyword': case 'string':
+        case 'StringLiteral':
+        case 'TSStringKeyword':
+        case 'string':
             return t.tsStringKeyword();
-        case 'BooleanLiteral': case 'TSBooleanKeyword': case 'boolean':
+        case 'BooleanLiteral':
+        case 'TSBooleanKeyword':
+        case 'boolean':
             return t.tsBooleanKeyword();
-        case 'NullLiteral': case 'TSNullKeyword': case 'null':
+        case 'NullLiteral':
+        case 'TSNullKeyword':
+        case 'null':
             return t.tsNullKeyword();
         default:
             return t.tsAnyKeyword();
@@ -31,8 +39,7 @@ function typesDiffer(elements) {
 
 function getType(node, t) {
     const isArray = node.type === 'ArrayExpression';
-    if (isArray)
-        return t.tsTupleType(multiTypeArray(node.elements, t));
+    if (isArray) return t.tsTupleType(multiTypeArray(node.elements, t));
     return mapType(node.type, t);
 }
 
@@ -40,8 +47,7 @@ function addTypeAnnotation(node, typeAnnotation, t) {
     if (!typeAnnotation) return; // the user said "skip"
     if (node.type === 'FunctionDeclaration')
         node.returnType = t.tsTypeAnnotation(typeAnnotation);
-    else
-        node.typeAnnotation = t.tsTypeAnnotation(typeAnnotation);
+    else node.typeAnnotation = t.tsTypeAnnotation(typeAnnotation);
 }
 
 // extentions
